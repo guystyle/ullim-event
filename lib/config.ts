@@ -10,9 +10,9 @@ export const site = {
   subCopy: "공식 인스타그램을 팔로우하고\n럭키드로우에 참여해 보세요",
   logo: "/logo.svg",
   instagram: [
-    { handle: "ullim.official", label: "울림 공식 계정" },
-    { handle: "ullim.studio", label: "울림 스튜디오" },
-    { handle: "ullim.event", label: "울림 이벤트" },
+    { handle: "weareullim", label: "ullim 공식 계정" },
+    { handle: "igin.official", label: "애플진은 아이진, IGIN" },
+    { handle: "unionseoul", label: "BAR UNION" },
   ],
 } as const;
 
