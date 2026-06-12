@@ -101,7 +101,7 @@ export default function LuckyDraw() {
             className="draw-open"
             onClick={() => setOpen(true)}
           >
-            🎰 럭키드로우 응모하기
+            럭키드로우 응모하기
           </button>
         </div>
       </div>
@@ -168,7 +168,7 @@ export default function LuckyDraw() {
                   className="btn-primary"
                   disabled={submitting}
                 >
-                  {submitting ? "응모 중..." : "응모하고 돌리기 🎰"}
+                  {submitting ? "응모 중..." : "응모하고 돌리기"}
                 </button>
                 <p className="form-fineprint">
                   응모 시 당첨 안내를 위해 인스타그램 아이디가 저장됩니다.
@@ -192,7 +192,7 @@ export default function LuckyDraw() {
                 {step === "result" && outcome === "win" && (
                   <div className="result win">
                     <Confetti />
-                    <p className="result-title">🎉 축하합니다, 당첨!</p>
+                    <p className="result-title">축하합니다, 당첨!</p>
                     <p className="result-desc">
                       <strong>@{handle}</strong> 님, 행운의 주인공이 되셨어요!
                       <br />
@@ -208,11 +208,11 @@ export default function LuckyDraw() {
                   <div className="result lose">
                     <span className="stamp">꽝</span>
                     <p className="result-desc">
-                      아쉽지만 다음 기회에 만나요 🥲
+                      아쉽지만 다음 기회에 만나요.
                       <br />
                       팔로우를 유지하시면 다음 이벤트 소식을
                       <br />
-                      가장 먼저 받아보실 수 있어요!
+                      가장 먼저 받아보실 수 있어요.
                     </p>
                     <button type="button" className="btn-secondary" onClick={close}>
                       닫기

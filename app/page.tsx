@@ -15,11 +15,11 @@ export default function Home() {
           </div>
           <p className="hero-eyebrow">{site.eyebrow}</p>
           <h1 className="hero-title">{site.tagline}</h1>
-          <svg className="smile-divider" viewBox="0 0 64 20" aria-hidden>
+          <svg className="wave-divider" viewBox="0 0 80 16" aria-hidden>
             <path
-              d="M4 4q28 22 56 0"
+              d="M3 8q9.5-9 19 0t19 0t19 0t19 0"
               stroke="currentColor"
-              strokeWidth="3.5"
+              strokeWidth="2.5"
               strokeLinecap="round"
               fill="none"
             />
@@ -39,7 +39,7 @@ export default function Home() {
         <LuckyDraw />
 
         <footer className="footer">
-          © {new Date().getFullYear()} {site.brandNameEn}. ALL RIGHTS RESERVED.
+          © {new Date().getFullYear()} {site.brandNameEn} · all rights reserved
         </footer>
       </div>
     </main>

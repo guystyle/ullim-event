@@ -3,7 +3,7 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import { site } from "@/lib/config";
 
-const SYMBOLS = ["🍎", "⭐", "🍀", "🔔", "✨", "🎁"];
+const SYMBOLS = ["🌊", "🎧", "⭐", "🍀", "✨", "🎁"];
 const JACKPOT = "🎁";
 const CELL = 104; // px — globals.css의 .reel-cell 높이와 일치해야 함
 const DURATIONS = [1900, 2550, 3200]; // 릴별 정지 시간(ms), 순차 정지

@@ -1,11 +1,14 @@
-# 울림 럭키드로우 이벤트 페이지
+# ullim 럭키드로우 이벤트 페이지
 
 린크트리 스타일의 원페이지 이벤트 사이트입니다.
 
 - 인스타그램 계정 **3개** 팔로우 버튼
 - **럭키드로우** 응모 — 슬롯머신 애니메이션 + 당첨 컨페티 이펙트
 - 당첨은 서버에서 강제: **낮은 확률 추첨 + 전체 당첨 3명 상한 + 아이디당 1회 응모**
-- 디자인 무드: [지니스램프](https://jinislamp.co.kr/) 참조 (따뜻한 크림 톤 + 레드/골드 포인트, 세리프 헤드라인)
+- 디자인: **ullim Design System v1.0** 기준
+  - 컬러: Warm Ivory `#F5F5DC` 배경 / Deep Navy `#1A2B3C` 텍스트 / Midnight Teal `#2C7A7B` 버튼 / Soft Gold `#C2B280` 보더 / Cream Yellow `#FFF4C2` 하이라이트 / Rosy Brown `#B29588` 서브 텍스트 / Dark Coral Brown `#8B3E2F` 에러·꽝
+  - 폰트: 영문 헤딩·배지 **Cormorant Garamond**(이탤릭 세리프), 한글 본문 **Arita Buri**
+    (`public/fonts/AritaBuri.ttf` 추가 시 적용 — [public/fonts/README.md](public/fonts/README.md) 참고. 없으면 고운바탕 폴백)
 
 ## 빠른 시작
 
@@ -20,8 +23,9 @@ npm run dev   # http://localhost:3000
 
 ### 1. 브랜드 로고 교체
 
-`public/logo.svg` 를 실제 로고 파일로 교체하세요. PNG를 쓰려면 `public/logo.png` 로 넣고
-`lib/config.ts` 의 `logo: "/logo.png"` 로 바꾸면 됩니다.
+지금은 임시 워드마크(`public/logo.svg`)가 들어 있습니다. 디자인 시스템의 Jorick 워드마크
+PNG(`ullim-logo-dark.png` — 밝은 배경용 Deep Navy 버전)를 `public/images/`에 넣고
+`lib/config.ts` 의 `logo: "/images/ullim-logo-dark.png"` 로 바꾸면 됩니다.
 
 ### 2. 브랜드명 / 인스타그램 계정 / 문구
 

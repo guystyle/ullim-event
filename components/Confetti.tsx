@@ -2,7 +2,8 @@
 
 import { useEffect, useRef } from "react";
 
-const COLORS = ["#CE4A2D", "#C99B2F", "#4A6B45", "#E5C878", "#FFFDF7", "#E2856E"];
+// ullim Design System 팔레트 기반
+const COLORS = ["#2C7A7B", "#C2B280", "#FFF4C2", "#1A2B3C", "#B29588", "#F5F5DC"];
 
 interface Particle {
   x: number;

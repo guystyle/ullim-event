@@ -4,10 +4,10 @@
  */
 export const site = {
   brandName: "울림",
-  brandNameEn: "ULLIM",
-  eyebrow: "WHERE ULLIM BEGINS",
-  tagline: "울림이 시작되는 곳",
-  subCopy: "공식 인스타그램 3개를 팔로우하고\n럭키드로우 행운에 도전해 보세요",
+  brandNameEn: "ullim",
+  eyebrow: "Seoul DJ Collective",
+  tagline: "문턱은 낮게, 울림은 깊게",
+  subCopy: "공식 인스타그램을 팔로우하고\n럭키드로우에 참여해 보세요",
   logo: "/logo.svg",
   instagram: [
     { handle: "ullim.official", label: "울림 공식 계정" },
