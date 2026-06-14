@@ -237,7 +237,7 @@ export default function LuckyDraw() {
                 </p>
                 {entered.result === "win" && (
                   <p className="form-fineprint">
-                    당첨 화면을 캡처해 두셨나요? 경품 수령 시 필요해요.
+                    이 화면을 캡처해 매장 방문 시 보여주시면 경품을 드려요.
                   </p>
                 )}
                 <button type="button" className="btn-secondary" onClick={close}>
@@ -261,7 +261,7 @@ export default function LuckyDraw() {
                     <p className="prize-line">{site.prize} 증정</p>
                     <p className="result-desc">
                       <strong>@{handle}</strong> 님, 행운의 주인공이 되셨어요!
-                      <br />이 당첨 화면을 캡처해 주세요.
+                      <br />이 당첨 화면을 캡처해 매장 방문 시 보여주세요.
                     </p>
                     <button type="button" className="btn-primary" onClick={close}>
                       확인
