@@ -43,26 +43,18 @@ function finalCombo(outcome: "win" | "lose"): [string, string, string] {
 interface SlotMachineProps {
   outcome: "win" | "lose";
   onDone: () => void;
-  /** true면 회전 없이 최종 결과 상태로 바로 렌더 (결과 확인 후 모달 재오픈용) */
-  instant?: boolean;
 }
 
-export default function SlotMachine({
-  outcome,
-  onDone,
-  instant = false,
-}: SlotMachineProps) {
+export default function SlotMachine({ outcome, onDone }: SlotMachineProps) {
   const combo = useMemo(() => finalCombo(outcome), [outcome]);
   const strips = useMemo(
     () => combo.map((s, i) => buildStrip(s, 22 + i * 6)),
     [combo],
   );
 
-  const [launched, setLaunched] = useState(instant);
-  const [stopped, setStopped] = useState<boolean[]>(
-    instant ? [true, true, true] : [false, false, false],
-  );
-  const [finished, setFinished] = useState(instant);
+  const [launched, setLaunched] = useState(false);
+  const [stopped, setStopped] = useState<boolean[]>([false, false, false]);
+  const [finished, setFinished] = useState(false);
 
   const onDoneRef = useRef(onDone);
   useEffect(() => {
@@ -70,8 +62,6 @@ export default function SlotMachine({
   }, [onDone]);
 
   useEffect(() => {
-    if (instant) return;
-
     // 초기 transform이 커밋된 다음 프레임에 회전 시작 (transition 보장)
     let raf2 = 0;
     const raf1 = requestAnimationFrame(() => {
@@ -94,7 +84,7 @@ export default function SlotMachine({
       stopTimers.forEach(clearTimeout);
       clearTimeout(doneTimer);
     };
-  }, [instant]);
+  }, []);
 
   const machineClass = [
     "machine",
@@ -119,10 +109,9 @@ export default function SlotMachine({
                 transform: launched
                   ? `translateY(${-(strip.length - 1) * CELL}px)`
                   : "translateY(0)",
-                transition:
-                  launched && !instant
-                    ? `transform ${DURATIONS[i]}ms cubic-bezier(.21,.86,.3,1.08)`
-                    : "none",
+                transition: launched
+                  ? `transform ${DURATIONS[i]}ms cubic-bezier(.21,.86,.3,1.08)`
+                  : "none",
               }}
             >
               {strip.map((symbol, j) => (

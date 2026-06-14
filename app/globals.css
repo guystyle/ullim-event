@@ -720,6 +720,29 @@ body {
   animation: stampIn 0.45s cubic-bezier(0.2, 0.9, 0.3, 1.3) both;
 }
 
+/* 이미 응모함 안내 */
+.result.already .result-title {
+  color: var(--ink);
+}
+
+.already-badge {
+  display: inline-block;
+  margin-top: 16px;
+  padding: 9px 16px;
+  font-size: 13px;
+  font-weight: 700;
+  border-radius: 999px;
+  background: rgba(178, 149, 136, 0.16);
+  color: var(--sub);
+  border: 1px solid var(--line);
+}
+
+.already-badge.win {
+  background: rgba(44, 122, 123, 0.12);
+  color: var(--teal);
+  border-color: rgba(44, 122, 123, 0.35);
+}
+
 /* ---------- 컨페티 ---------- */
 
 .confetti-canvas {

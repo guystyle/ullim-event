@@ -5,10 +5,16 @@ import { site } from "@/lib/config";
 import SlotMachine from "./SlotMachine";
 import Confetti from "./Confetti";
 
-type Step = "form" | "spinning" | "result";
+type Step = "form" | "spinning" | "result" | "already";
 type Outcome = "win" | "lose";
 
+interface EnteredRecord {
+  handle: string;
+  result: Outcome;
+}
+
 const HANDLE_RE = /^[a-z0-9._]{2,30}$/;
+const STORAGE_KEY = "ullim:draw:entry";
 
 export default function LuckyDraw() {
   const [open, setOpen] = useState(false);
@@ -18,8 +24,25 @@ export default function LuckyDraw() {
   const [submitting, setSubmitting] = useState(false);
   const [outcome, setOutcome] = useState<Outcome | null>(null);
   const [error, setError] = useState<string | null>(null);
+  // 이 브라우저에서 이미 응모했는지 (localStorage에 저장 → 새로고침/재방문에도 유지)
+  const [entered, setEntered] = useState<EnteredRecord | null>(null);
 
   const spinning = step === "spinning";
+
+  // 마운트 시 이전 응모 기록을 복원 (클라이언트 전용)
+  useEffect(() => {
+    try {
+      const raw = localStorage.getItem(STORAGE_KEY);
+      if (raw) {
+        const rec = JSON.parse(raw) as EnteredRecord;
+        if (rec?.handle && (rec.result === "win" || rec.result === "lose")) {
+          setEntered(rec);
+        }
+      }
+    } catch {
+      /* localStorage 비활성 환경은 무시 */
+    }
+  }, []);
 
   const close = useCallback(() => {
     if (spinning) return; // 추첨 중에는 닫기 방지
@@ -38,6 +61,22 @@ export default function LuckyDraw() {
       document.body.style.overflow = "";
     };
   }, [open, close]);
+
+  const openDraw = () => {
+    setError(null);
+    // 이미 응모했다면 폼 대신 안내 화면으로
+    setStep(entered ? "already" : "form");
+    setOpen(true);
+  };
+
+  const persistEntry = (rec: EnteredRecord) => {
+    setEntered(rec);
+    try {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(rec));
+    } catch {
+      /* 무시 */
+    }
+  };
 
   const submit = async (e: FormEvent) => {
     e.preventDefault();
@@ -66,6 +105,7 @@ export default function LuckyDraw() {
       };
 
       if (res.status === 409) {
+        // 같은 아이디로 이미 응모됨 (다른 기기 등) — 오타일 수 있으니 폼에서 안내
         setError("이미 응모한 아이디예요. 응모는 아이디당 1회만 가능해요.");
         return;
       }
@@ -76,6 +116,7 @@ export default function LuckyDraw() {
 
       setHandle(normalized);
       setOutcome(data.result);
+      persistEntry({ handle: normalized, result: data.result });
       setStep("spinning"); // 결과는 슬롯머신이 멈춘 뒤 공개
     } catch {
       setError("네트워크 오류가 발생했어요. 다시 시도해 주세요.");
@@ -92,17 +133,28 @@ export default function LuckyDraw() {
         <div className="draw-card-inner">
           <p className="draw-eyebrow">FOLLOW &amp; WIN</p>
           <h2 className="draw-title">LUCKY DRAW</h2>
-          <p className="draw-desc">
-            팔로우 후 응모하면 즉석에서 추첨!
-            <br />단 <strong>3분</strong>께 행운의 선물을 드려요
-          </p>
-          <button
-            type="button"
-            className="draw-open"
-            onClick={() => setOpen(true)}
-          >
-            럭키드로우 응모하기
-          </button>
+          {entered ? (
+            <>
+              <p className="draw-desc">
+                이미 응모를 완료했어요.
+                <br />
+                응모는 아이디당 <strong>1회</strong>만 가능해요.
+              </p>
+              <button type="button" className="draw-open" onClick={openDraw}>
+                내 응모 결과 보기
+              </button>
+            </>
+          ) : (
+            <>
+              <p className="draw-desc">
+                팔로우 후 응모하면 즉석에서 추첨!
+                <br />단 <strong>3분</strong>께 행운의 선물을 드려요
+              </p>
+              <button type="button" className="draw-open" onClick={openDraw}>
+                럭키드로우 응모하기
+              </button>
+            </>
+          )}
         </div>
       </div>
 
@@ -156,18 +208,12 @@ export default function LuckyDraw() {
                     checked={followed}
                     onChange={(e) => setFollowed(e.target.checked)}
                   />
-                  <span>
-                    {site.brandName} 계정 3개를 모두 팔로우했어요
-                  </span>
+                  <span>{site.brandName} 계정 3개를 모두 팔로우했어요</span>
                 </label>
 
                 {error && <p className="form-error">{error}</p>}
 
-                <button
-                  type="submit"
-                  className="btn-primary"
-                  disabled={submitting}
-                >
+                <button type="submit" className="btn-primary" disabled={submitting}>
                   {submitting ? "응모 중..." : "응모하고 돌리기"}
                 </button>
                 <p className="form-fineprint">
@@ -176,14 +222,28 @@ export default function LuckyDraw() {
               </form>
             )}
 
-            {step !== "form" && outcome && (
+            {step === "already" && entered && (
+              <div className={`result already ${entered.result}`}>
+                <p className="result-title">이미 응모하셨어요</p>
+                <p className="result-desc">
+                  <strong>@{entered.handle}</strong> 님은 이미 참여하셨어요.
+                  <br />
+                  응모는 인스타그램 아이디당 <strong>1회</strong>만 가능해요.
+                </p>
+                <p className={`already-badge ${entered.result}`}>
+                  {entered.result === "win"
+                    ? "지난 결과 · 당첨 🎉 DM으로 안내드릴게요"
+                    : "지난 결과 · 아쉽게도 꽝"}
+                </p>
+                <button type="button" className="btn-secondary" onClick={close}>
+                  닫기
+                </button>
+              </div>
+            )}
+
+            {(step === "spinning" || step === "result") && outcome && (
               <div className="draw-stage">
-                {/* 결과 확인 후 다시 열면 회전 없이 결과 화면으로 */}
-                <SlotMachine
-                  outcome={outcome}
-                  onDone={handleSpinDone}
-                  instant={step === "result"}
-                />
+                <SlotMachine outcome={outcome} onDone={handleSpinDone} />
 
                 {step === "spinning" && (
                   <p className="spin-hint">두구두구두구...</p>
