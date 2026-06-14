@@ -11,6 +11,8 @@ export const site = {
   logo: "/logo.svg",
   /** 당첨 경품 — 결과 화면에 표시됩니다 */
   prize: "프리미엄 진 IGIN 1병",
+  /** 꽝 위로 경품 — 모든 참여자에게 증정 */
+  consolationPrize: "논알콜 드링크",
   instagram: [
     { handle: "weareullim", label: "ullim 공식 계정" },
     { handle: "igin.official", label: "애플진은 아이진, IGIN" },

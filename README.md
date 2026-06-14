@@ -5,6 +5,8 @@
 - 인스타그램 계정 **3개** 팔로우 버튼
 - **럭키드로우** 응모 — 슬롯머신 애니메이션 + 당첨 컨페티 이펙트
 - 당첨은 서버에서 강제: **낮은 확률 추첨 + 전체 당첨 3명 상한 + 아이디당 1회 응모**
+- 경품: 당첨 시 **프리미엄 진 IGIN 1병**, 그 외에도 **논알콜 드링크** 증정
+  (현장 BAR UNION 운영 — 참여자가 결과 화면을 직원에게 보여주고 수령. 문구는 `lib/config.ts` 의 `prize`·`consolationPrize` 로 변경)
 - 디자인: **ullim Design System v1.0** 기준
   - 컬러: Warm Ivory `#F5F5DC` 배경 / Deep Navy `#1A2B3C` 텍스트 / Midnight Teal `#2C7A7B` 버튼 / Soft Gold `#C2B280` 보더 / Cream Yellow `#FFF4C2` 하이라이트 / Rosy Brown `#B29588` 서브 텍스트 / Dark Coral Brown `#8B3E2F` 에러·꽝
   - 폰트: 영문 헤딩·배지 **Cormorant Garamond**(이탤릭 세리프), 한글 본문 **Arita Buri**
@@ -72,9 +74,10 @@ curl "https://<도메인>/api/admin/entries?token=<ADMIN_TOKEN>"
 # → { "winners": [{ "handle": "...", "at": "..." }], "totalEntries": 123 }
 ```
 
-당첨자는 화면에서 **"{prize} 증정"** 안내를 보고 당첨 화면을 캡처하도록 안내됩니다.
-경품 수령 시 이 화면을 확인하고, 위 관리자 API의 당첨자 아이디와 대조하면 됩니다.
-경품 문구는 `lib/config.ts` 의 `prize` 값으로 바꿀 수 있습니다.
+현장(BAR UNION)에서 참여자가 결과 화면을 직원에게 보여주면 경품을 지급합니다.
+당첨자는 IGIN 1병, 그 외 참여자는 논알콜 드링크를 받습니다. 당첨자 명단은 위
+관리자 API로 확인·대조할 수 있고, 경품 문구는 `lib/config.ts` 의 `prize`·
+`consolationPrize` 값으로 바꿀 수 있습니다.
 
 ## 배포 (Vercel 권장)
 

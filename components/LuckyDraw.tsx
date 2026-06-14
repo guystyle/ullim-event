@@ -147,8 +147,8 @@ export default function LuckyDraw() {
           ) : (
             <>
               <p className="draw-desc">
-                팔로우 후 응모하면 즉석에서 추첨!
-                <br />단 <strong>3분</strong>께 행운의 선물을 드려요
+                팔로우 후 응모하면 즉석 추첨!
+                <br />당첨 <strong>3분</strong> IGIN 1병 · 그 외 <strong>논알콜 드링크</strong> 증정
               </p>
               <button type="button" className="draw-open" onClick={openDraw}>
                 럭키드로우 응모하기
@@ -182,7 +182,9 @@ export default function LuckyDraw() {
                 <p className="modal-desc">
                   인스타그램 아이디당 <strong>1회</strong>만 응모할 수 있어요.
                   <br />
-                  당첨되면 <strong>{site.prize}</strong>을 드려요.
+                  당첨되면 <strong>{site.prize}</strong>,
+                  <br />
+                  아니어도 <strong>{site.consolationPrize}</strong>를 드려요!
                 </p>
 
                 <label className="field">
@@ -233,13 +235,11 @@ export default function LuckyDraw() {
                 <p className={`already-badge ${entered.result}`}>
                   {entered.result === "win"
                     ? `지난 결과 · 당첨 🎉 ${site.prize} 증정`
-                    : "지난 결과 · 아쉽게도 꽝"}
+                    : `지난 결과 · ${site.consolationPrize} 증정`}
                 </p>
-                {entered.result === "win" && (
-                  <p className="form-fineprint">
-                    이 화면을 캡처해 매장 방문 시 보여주시면 경품을 드려요.
-                  </p>
-                )}
+                <p className="form-fineprint">
+                  이 화면을 직원에게 보여주시면 경품을 드려요.
+                </p>
                 <button type="button" className="btn-secondary" onClick={close}>
                   닫기
                 </button>
@@ -261,7 +261,7 @@ export default function LuckyDraw() {
                     <p className="prize-line">{site.prize} 증정</p>
                     <p className="result-desc">
                       <strong>@{handle}</strong> 님, 행운의 주인공이 되셨어요!
-                      <br />이 당첨 화면을 캡처해 매장 방문 시 보여주세요.
+                      <br />이 화면을 <strong>직원에게</strong> 보여주세요.
                     </p>
                     <button type="button" className="btn-primary" onClick={close}>
                       확인
@@ -272,12 +272,14 @@ export default function LuckyDraw() {
                 {step === "result" && outcome === "lose" && (
                   <div className="result lose">
                     <span className="stamp">꽝</span>
+                    <p className="prize-line consolation">
+                      {site.consolationPrize} 증정
+                    </p>
                     <p className="result-desc">
-                      아쉽지만 다음 기회에 만나요.
+                      아쉽지만 IGIN 1병은 다음 기회에...
                       <br />
-                      팔로우를 유지하시면 다음 이벤트 소식을
-                      <br />
-                      가장 먼저 받아보실 수 있어요.
+                      대신 <strong>{site.consolationPrize}</strong>를 드려요!
+                      <br />이 화면을 <strong>직원에게</strong> 보여주세요.
                     </p>
                     <button type="button" className="btn-secondary" onClick={close}>
                       닫기

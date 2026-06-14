@@ -693,7 +693,7 @@ body {
   color: var(--teal);
 }
 
-/* 당첨 경품 강조 라인 */
+/* 경품 강조 라인 (당첨) */
 .prize-line {
   margin-top: 12px;
   display: inline-block;
@@ -704,6 +704,13 @@ body {
   background: var(--highlight);
   border: 1px solid var(--gold);
   border-radius: 999px;
+}
+
+/* 경품 강조 라인 (꽝 위로 경품) */
+.prize-line.consolation {
+  color: var(--ink);
+  background: rgba(178, 149, 136, 0.18);
+  border-color: var(--sub);
 }
 
 .result-desc {
