@@ -693,6 +693,19 @@ body {
   color: var(--teal);
 }
 
+/* 당첨 경품 강조 라인 */
+.prize-line {
+  margin-top: 12px;
+  display: inline-block;
+  padding: 9px 18px;
+  font-size: 16px;
+  font-weight: 800;
+  color: var(--teal-deep);
+  background: var(--highlight);
+  border: 1px solid var(--gold);
+  border-radius: 999px;
+}
+
 .result-desc {
   margin-top: 10px;
   font-size: 14px;
@@ -727,11 +740,13 @@ body {
 
 .already-badge {
   display: inline-block;
+  max-width: 100%;
   margin-top: 16px;
   padding: 9px 16px;
   font-size: 13px;
   font-weight: 700;
-  border-radius: 999px;
+  line-height: 1.5;
+  border-radius: 14px;
   background: rgba(178, 149, 136, 0.16);
   color: var(--sub);
   border: 1px solid var(--line);

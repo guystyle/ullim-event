@@ -182,7 +182,7 @@ export default function LuckyDraw() {
                 <p className="modal-desc">
                   인스타그램 아이디당 <strong>1회</strong>만 응모할 수 있어요.
                   <br />
-                  당첨 시 해당 아이디로 DM을 드려요.
+                  당첨되면 <strong>{site.prize}</strong>을 드려요.
                 </p>
 
                 <label className="field">
@@ -232,9 +232,14 @@ export default function LuckyDraw() {
                 </p>
                 <p className={`already-badge ${entered.result}`}>
                   {entered.result === "win"
-                    ? "지난 결과 · 당첨 🎉 DM으로 안내드릴게요"
+                    ? `지난 결과 · 당첨 🎉 ${site.prize} 증정`
                     : "지난 결과 · 아쉽게도 꽝"}
                 </p>
+                {entered.result === "win" && (
+                  <p className="form-fineprint">
+                    당첨 화면을 캡처해 두셨나요? 경품 수령 시 필요해요.
+                  </p>
+                )}
                 <button type="button" className="btn-secondary" onClick={close}>
                   닫기
                 </button>
@@ -253,10 +258,10 @@ export default function LuckyDraw() {
                   <div className="result win">
                     <Confetti />
                     <p className="result-title">축하합니다, 당첨!</p>
+                    <p className="prize-line">{site.prize} 증정</p>
                     <p className="result-desc">
                       <strong>@{handle}</strong> 님, 행운의 주인공이 되셨어요!
-                      <br />
-                      {site.brandName} 공식 계정에서 DM으로 경품을 안내드릴게요.
+                      <br />이 당첨 화면을 캡처해 주세요.
                     </p>
                     <button type="button" className="btn-primary" onClick={close}>
                       확인

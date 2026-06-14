@@ -72,7 +72,9 @@ curl "https://<도메인>/api/admin/entries?token=<ADMIN_TOKEN>"
 # → { "winners": [{ "handle": "...", "at": "..." }], "totalEntries": 123 }
 ```
 
-당첨자의 인스타그램 아이디로 DM을 보내 경품을 안내하면 됩니다.
+당첨자는 화면에서 **"{prize} 증정"** 안내를 보고 당첨 화면을 캡처하도록 안내됩니다.
+경품 수령 시 이 화면을 확인하고, 위 관리자 API의 당첨자 아이디와 대조하면 됩니다.
+경품 문구는 `lib/config.ts` 의 `prize` 값으로 바꿀 수 있습니다.
 
 ## 배포 (Vercel 권장)
 
