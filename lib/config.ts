@@ -13,10 +13,12 @@ export const site = {
   prize: "프리미엄 진 IGIN 1병",
   /** 꽝 위로 경품 — 모든 참여자에게 증정 */
   consolationPrize: "논알콜 드링크",
+  // avatar를 비워두면 핸들로 인스타 프로필 사진을 자동으로 불러옵니다(unavatar).
+  // 직접 호스팅하려면 public/에 이미지를 넣고 avatar에 경로(예: "/profiles/ullim.jpg")를 지정하세요.
   instagram: [
-    { handle: "weareullim", label: "ullim 공식 계정" },
-    { handle: "igin.official", label: "애플진은 아이진, IGIN" },
-    { handle: "unionseoul", label: "BAR UNION" },
+    { handle: "weareullim", label: "ullim 공식 계정", avatar: "" },
+    { handle: "igin.official", label: "애플진은 아이진, IGIN", avatar: "" },
+    { handle: "unionseoul", label: "BAR UNION", avatar: "" },
   ],
 } as const;
 
