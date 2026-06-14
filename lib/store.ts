@@ -1,4 +1,5 @@
 import { promises as fs } from "fs";
+import os from "os";
 import path from "path";
 
 export type DrawResult = "win" | "lose";
@@ -86,16 +87,45 @@ interface FileState {
 }
 
 /**
- * 로컬 JSON 파일 저장소 (개발용).
- * 서버리스 배포에서는 파일이 유지되지 않으므로 운영에서는 Upstash를 사용하세요.
+ * 로컬 JSON 파일 저장소 (개발/미리보기용).
+ * 서버리스 배포에서는 인스턴스 간 파일이 공유되지 않으므로(=당첨 상한·중복응모
+ * 보장이 깨짐) 운영에서는 반드시 Upstash를 사용하세요.
  */
 class FileStore implements DrawStore {
-  private file = path.join(process.cwd(), "data", "draw.json");
   private queue: Promise<unknown> = Promise.resolve();
+  private filePromise?: Promise<string>;
+
+  /**
+   * 쓰기 가능한 저장 경로를 한 번만 결정해 캐시한다.
+   * 프로젝트 폴더가 읽기 전용(Vercel 등)이면 OS 임시폴더로 폴백.
+   */
+  private resolveFile(): Promise<string> {
+    if (!this.filePromise) {
+      this.filePromise = (async () => {
+        const primaryDir = path.join(process.cwd(), "data");
+        try {
+          await fs.mkdir(primaryDir, { recursive: true });
+          return path.join(primaryDir, "draw.json");
+        } catch {
+          const fallbackDir = path.join(os.tmpdir(), "ullim-draw");
+          await fs.mkdir(fallbackDir, { recursive: true });
+          console.warn(
+            "[draw] 프로젝트 폴더에 쓸 수 없어 임시폴더(%s)를 사용합니다. " +
+              "미리보기는 동작하지만 인스턴스 간 공유가 안 되므로, 실제 이벤트 " +
+              "운영에는 UPSTASH_REDIS_REST_URL/TOKEN 을 설정하세요.",
+            fallbackDir,
+          );
+          return path.join(fallbackDir, "draw.json");
+        }
+      })();
+    }
+    return this.filePromise;
+  }
 
   private async read(): Promise<FileState> {
     try {
-      const raw = await fs.readFile(this.file, "utf8");
+      const file = await this.resolveFile();
+      const raw = await fs.readFile(file, "utf8");
       return JSON.parse(raw) as FileState;
     } catch {
       return { handles: [], winnerCount: 0, entries: [] };
@@ -103,8 +133,8 @@ class FileStore implements DrawStore {
   }
 
   private async write(state: FileState): Promise<void> {
-    await fs.mkdir(path.dirname(this.file), { recursive: true });
-    await fs.writeFile(this.file, JSON.stringify(state, null, 2), "utf8");
+    const file = await this.resolveFile();
+    await fs.writeFile(file, JSON.stringify(state, null, 2), "utf8");
   }
 
   /** 읽기-수정-쓰기를 직렬화하는 단순 뮤텍스. */

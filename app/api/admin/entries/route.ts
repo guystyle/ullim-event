@@ -30,11 +30,16 @@ export async function GET(req: Request) {
     return NextResponse.json({ error: "unauthorized" }, { status: 401 });
   }
 
-  const store = getStore();
-  const [winners, totalEntries] = await Promise.all([
-    store.getWinners(),
-    store.getEntryCount(),
-  ]);
+  try {
+    const store = getStore();
+    const [winners, totalEntries] = await Promise.all([
+      store.getWinners(),
+      store.getEntryCount(),
+    ]);
 
-  return NextResponse.json({ winners, totalEntries });
+    return NextResponse.json({ winners, totalEntries });
+  } catch (err) {
+    console.error("[admin] 저장소 조회 실패:", err);
+    return NextResponse.json({ error: "store_unavailable" }, { status: 500 });
+  }
 }

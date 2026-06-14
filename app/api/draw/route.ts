@@ -25,26 +25,32 @@ export async function POST(req: Request) {
 
   const store = getStore();
 
-  // 인스타그램 아이디당 1회만 응모 가능 (원자적 등록)
-  const isNew = await store.addEntry(normalized);
-  if (!isNew) {
-    return NextResponse.json({ error: "already_entered" }, { status: 409 });
+  try {
+    // 인스타그램 아이디당 1회만 응모 가능 (원자적 등록)
+    const isNew = await store.addEntry(normalized);
+    if (!isNew) {
+      return NextResponse.json({ error: "already_entered" }, { status: 409 });
+    }
+
+    // 확률 추첨 후, 당첨 상한(기본 3명)을 원자적으로 확인
+    let result: DrawResult = "lose";
+    if (
+      Math.random() < drawConfig.winProbability &&
+      (await store.tryClaimWin(drawConfig.maxWinners))
+    ) {
+      result = "win";
+    }
+
+    await store.recordResult({
+      handle: normalized,
+      result,
+      at: new Date().toISOString(),
+    });
+
+    return NextResponse.json({ result });
+  } catch (err) {
+    // 저장소 오류(예: 서버리스 읽기전용 FS, Redis 연결 실패) — 로그로 원인 노출
+    console.error("[draw] 저장소 처리 실패:", err);
+    return NextResponse.json({ error: "store_unavailable" }, { status: 500 });
   }
-
-  // 확률 추첨 후, 당첨 상한(기본 3명)을 원자적으로 확인
-  let result: DrawResult = "lose";
-  if (
-    Math.random() < drawConfig.winProbability &&
-    (await store.tryClaimWin(drawConfig.maxWinners))
-  ) {
-    result = "win";
-  }
-
-  await store.recordResult({
-    handle: normalized,
-    result,
-    at: new Date().toISOString(),
-  });
-
-  return NextResponse.json({ result });
 }
