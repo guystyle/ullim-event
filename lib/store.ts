@@ -185,10 +185,19 @@ class FileStore implements DrawStore {
 
 const globalStore = globalThis as unknown as { __drawStore?: DrawStore };
 
+/**
+ * .env 값을 복사할 때 함께 붙는 따옴표/공백을 제거한다.
+ * (예: `URL="https://..."` 를 그대로 붙여 넣는 흔한 설정 실수 방지)
+ */
+function cleanEnv(value: string | undefined): string | undefined {
+  if (!value) return value;
+  return value.trim().replace(/^['"]|['"]$/g, "").trim();
+}
+
 export function getStore(): DrawStore {
   if (!globalStore.__drawStore) {
-    const url = process.env.UPSTASH_REDIS_REST_URL;
-    const token = process.env.UPSTASH_REDIS_REST_TOKEN;
+    const url = cleanEnv(process.env.UPSTASH_REDIS_REST_URL);
+    const token = cleanEnv(process.env.UPSTASH_REDIS_REST_TOKEN);
     globalStore.__drawStore =
       url && token ? new UpstashStore(url, token) : new FileStore();
   }
