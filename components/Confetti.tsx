@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef } from "react";
+import { createPortal } from "react-dom";
 
 const COLORS = ["#2C7A7B", "#C2B280", "#FFF4C2", "#1A2B3C", "#B29588", "#F5F5DC", "#FFD700", "#FFFFFF"];
 
@@ -31,7 +32,7 @@ function drawStar(ctx: CanvasRenderingContext2D, cx: number, cy: number, r: numb
   ctx.fill();
 }
 
-export default function Confetti({ duration = 5000 }: { duration?: number }) {
+function ConfettiCanvas({ duration = 5000 }: { duration?: number }) {
   const ref = useRef<HTMLCanvasElement>(null);
 
   useEffect(() => {
@@ -96,18 +97,13 @@ export default function Confetti({ duration = 5000 }: { duration?: number }) {
       }
     };
 
-    // 1차: 중앙 대폭발
     spawn(canvas.width * 0.5, canvas.height * 0.35, 150, 80, 14);
-    // 2차: 좌우 버스트
     const t1 = setTimeout(() => {
       spawn(canvas.width * 0.2, canvas.height * 0.3, 80, 60, 12);
       spawn(canvas.width * 0.8, canvas.height * 0.3, 80, 60, 12);
     }, 300);
-    // 3차: 위에서 쏟아지는 비
     const t2 = setTimeout(() => burstFromTop(120), 600);
-    // 4차: 중앙 추가 버스트
     const t3 = setTimeout(() => spawn(canvas.width * 0.5, canvas.height * 0.4, 100, 120, 10), 1000);
-    // 5차: 좌우 마지막 세레머니
     const t4 = setTimeout(() => {
       spawn(canvas.width * 0.15, canvas.height * 0.5, 60, 40, 11);
       spawn(canvas.width * 0.85, canvas.height * 0.5, 60, 40, 11);
@@ -131,7 +127,6 @@ export default function Confetti({ duration = 5000 }: { duration?: number }) {
         p.y += p.vy;
         p.rot += p.vr;
 
-        // 페이드아웃
         const lifeRatio = p.life / p.maxLife;
         p.opacity = lifeRatio > 0.7 ? 1 - (lifeRatio - 0.7) / 0.3 : 1;
 
@@ -180,4 +175,8 @@ export default function Confetti({ duration = 5000 }: { duration?: number }) {
   }, [duration]);
 
   return <canvas ref={ref} className="confetti-canvas" aria-hidden />;
+}
+
+export default function Confetti({ duration = 5000 }: { duration?: number }) {
+  return createPortal(<ConfettiCanvas duration={duration} />, document.body);
 }
