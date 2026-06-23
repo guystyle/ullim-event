@@ -210,7 +210,7 @@ export default function LuckyDraw() {
                     checked={followed}
                     onChange={(e) => setFollowed(e.target.checked)}
                   />
-                  <span>{site.brandName} 계정 3개를 모두 팔로우했어요</span>
+                  <span>팔로우 완료했어요</span>
                 </label>
 
                 {error && <p className="form-error">{error}</p>}
