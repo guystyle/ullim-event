@@ -10,11 +10,9 @@ export default function Home() {
       <div className="shell">
         <header className="hero">
           <div className="hero-logo">
-            {/* 브랜드 로고 — public/logo.svg 파일을 교체하면 됩니다 */}
+            {/* 브랜드 로고 — public/logo.png 파일을 교체하면 됩니다 */}
             <img src={site.logo} alt={`${site.brandName} 로고`} />
           </div>
-          <p className="hero-eyebrow">{site.eyebrow}</p>
-          <h1 className="hero-title">{site.tagline}</h1>
           <svg className="wave-divider" viewBox="0 0 80 16" aria-hidden>
             <path
               d="M3 8q9.5-9 19 0t19 0t19 0t19 0"
