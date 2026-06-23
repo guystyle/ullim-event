@@ -216,7 +216,7 @@ export default function LuckyDraw() {
                 {error && <p className="form-error">{error}</p>}
 
                 <button type="submit" className="btn-primary" disabled={submitting}>
-                  {submitting ? "응모 중..." : "응모하고 돌리기"}
+                  {submitting ? "응모 중..." : "응모하기"}
                 </button>
                 <p className="form-fineprint">
                   응모 시 당첨 안내를 위해 인스타그램 아이디가 저장됩니다.
