@@ -10,7 +10,7 @@ export const site = {
   subCopy: "공식 인스타그램을 팔로우하고\n럭키드로우에 참여해 보세요",
   logo: "/logo.svg",
   /** 당첨 경품 — 결과 화면에 표시됩니다 */
-  prize: "글로벌 프리미엄 진 IGIN 1병",
+  prize: "스페셜 기프트",
   /** 꽝 위로 경품 — 모든 참여자에게 증정 */
   consolationPrize: "IGIN 논알콜 드링크",
   // avatar: public/ 안의 프로필 이미지 경로. 비워두거나 로딩 실패 시 인스타 글리프 아이콘으로 표시됩니다.

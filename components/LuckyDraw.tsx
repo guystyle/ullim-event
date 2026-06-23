@@ -148,7 +148,7 @@ export default function LuckyDraw() {
             <>
               <p className="draw-desc">
                 팔로우 후 응모하면 즉석 추첨!
-                <br />당첨 <strong>3분</strong> IGIN 1병 · 그 외 <strong>논알콜 드링크</strong> 증정
+                <br />당첨 <strong>3분</strong> {site.prize} · 그 외 <strong>{site.consolationPrize}</strong> 증정
               </p>
               <button type="button" className="draw-open" onClick={openDraw}>
                 럭키드로우 응모하기
@@ -276,7 +276,7 @@ export default function LuckyDraw() {
                       {site.consolationPrize} 증정
                     </p>
                     <p className="result-desc">
-                      아쉽지만 IGIN 1병은 다음 기회에...
+                      아쉽지만 {site.prize}는 다음 기회에...
                       <br />
                       대신 <strong>{site.consolationPrize}</strong>를 드려요!
                       <br />이 화면을 <strong>직원에게</strong> 보여주세요.
