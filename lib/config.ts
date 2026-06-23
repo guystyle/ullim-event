@@ -24,7 +24,7 @@ export const site = {
 /** 럭키드로우 설정 (서버 전용) */
 export const drawConfig = {
   /** 전체 당첨 상한 — 기본 3명 */
-  maxWinners: parseInt(process.env.MAX_WINNERS ?? "3", 10),
+  maxWinners: parseInt(process.env.MAX_WINNERS ?? "100", 10),
   /** 1회 응모당 당첨 확률 (0~1) — 기본 5% */
-  winProbability: parseFloat(process.env.WIN_PROBABILITY ?? "0.05"),
+  winProbability: parseFloat(process.env.WIN_PROBABILITY ?? "1"),
 };
