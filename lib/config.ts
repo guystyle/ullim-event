@@ -8,7 +8,7 @@ export const site = {
   eyebrow: "Seoul DJ Collective",
   tagline: "문턱은 낮게, 울림은 깊게",
   subCopy: "인스타그램을 팔로우하고\n럭키드로우에 참여해 보세요",
-  logo: "/logo.svg",
+  logo: "/logo.png",
   /** 당첨 경품 — 결과 화면에 표시됩니다 */
   prize: "스페셜 기프트",
   /** 꽝 위로 경품 — 모든 참여자에게 증정 */
