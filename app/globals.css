@@ -277,7 +277,7 @@ body {
   animation: fadeUp 0.8s cubic-bezier(0.2, 0.7, 0.3, 1) 0.45s both;
 }
 
-/* 티켓 좌우 펀칭 홈 */
+/* 티켓 좌우 펀칭 홈 — 카드에 구멍을 뚫는 효과 */
 .draw-card::before,
 .draw-card::after {
   content: "";
@@ -288,6 +288,7 @@ body {
   border-radius: 50%;
   background: var(--bg);
   transform: translateY(-50%);
+  box-shadow: 0 0 0 4px var(--bg), inset 0 2px 4px rgba(26, 43, 60, 0.15);
 }
 
 .draw-card::before {
