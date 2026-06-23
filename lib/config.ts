@@ -3,10 +3,10 @@
  * 로고는 public/logo.svg(또는 png)를 교체한 뒤 logo 경로를 맞춰 주세요.
  */
 export const site = {
-  brandName: "울림",
+  brandName: "ullim",
   brandNameEn: "ullim",
   eyebrow: "Seoul DJ Collective",
-  tagline: "문턱은 낮게, 울림은 깊게",
+  tagline: "",
   subCopy: "인스타그램을 팔로우하고\n럭키드로우에 참여해 보세요",
   logo: "/logo.png",
   /** 당첨 경품 — 결과 화면에 표시됩니다 */
