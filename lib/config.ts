@@ -7,7 +7,7 @@ export const site = {
   brandNameEn: "ullim",
   eyebrow: "Seoul DJ Collective",
   tagline: "문턱은 낮게, 울림은 깊게",
-  subCopy: "공식 인스타그램을 팔로우하고\n럭키드로우에 참여해 보세요",
+  subCopy: "인스타그램을 팔로우하고\n럭키드로우에 참여해 보세요",
   logo: "/logo.svg",
   /** 당첨 경품 — 결과 화면에 표시됩니다 */
   prize: "스페셜 기프트",
