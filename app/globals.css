@@ -275,28 +275,15 @@ body {
   padding: 9px;
   box-shadow: 0 16px 36px rgba(26, 43, 60, 0.28);
   animation: fadeUp 0.8s cubic-bezier(0.2, 0.7, 0.3, 1) 0.45s both;
-}
-
-/* 티켓 좌우 펀칭 홈 — 카드에 구멍을 뚫는 효과 */
-.draw-card::before,
-.draw-card::after {
-  content: "";
-  position: absolute;
-  top: 50%;
-  width: 22px;
-  height: 22px;
-  border-radius: 50%;
-  background: var(--bg);
-  transform: translateY(-50%);
-  box-shadow: 0 0 0 4px var(--bg), inset 0 2px 4px rgba(26, 43, 60, 0.15);
-}
-
-.draw-card::before {
-  left: -11px;
-}
-
-.draw-card::after {
-  right: -11px;
+  /* 티켓 좌우 펀칭 홈 — 카드 자체를 도려내 뒤 배경이 그대로 비치게 함 */
+  -webkit-mask:
+    radial-gradient(circle 11px at left center, transparent 0 11px, #000 11.5px),
+    radial-gradient(circle 11px at right center, transparent 0 11px, #000 11.5px);
+  -webkit-mask-composite: source-in;
+  mask:
+    radial-gradient(circle 11px at left center, transparent 0 11px, #000 11.5px),
+    radial-gradient(circle 11px at right center, transparent 0 11px, #000 11.5px);
+  mask-composite: intersect;
 }
 
 .draw-card-inner {
