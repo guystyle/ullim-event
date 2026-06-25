@@ -139,6 +139,7 @@ body {
 }
 
 .link-card {
+  position: relative;
   display: flex;
   align-items: center;
   gap: 14px;
@@ -152,7 +153,8 @@ body {
   transition:
     transform 0.22s ease,
     border-color 0.22s ease,
-    box-shadow 0.22s ease;
+    box-shadow 0.22s ease,
+    opacity 0.3s ease;
   animation: fadeUp 0.8s cubic-bezier(0.2, 0.7, 0.3, 1) both;
 }
 
@@ -176,6 +178,7 @@ body {
 }
 
 .link-icon {
+  position: relative;
   flex: none;
   width: 42px;
   height: 42px;
@@ -380,15 +383,75 @@ body {
   color: rgba(245, 245, 220, 0.68);
 }
 
-/* 팔로우 완료된 계정 카드 */
+/* 단계 번호 배지 (아바타 좌상단) */
+.link-step {
+  position: absolute;
+  top: -5px;
+  left: -5px;
+  min-width: 19px;
+  height: 19px;
+  padding: 0 4px;
+  display: grid;
+  place-items: center;
+  border-radius: 999px;
+  background: var(--ink);
+  color: var(--bg);
+  font-size: 11px;
+  font-weight: 700;
+  line-height: 1;
+  border: 1.5px solid var(--card);
+  box-shadow: 0 1px 3px rgba(26, 43, 60, 0.25);
+}
+
+/* 팔로우 완료된 계정 카드 — 흐려지고 ✓ */
 .link-card.done {
   border-color: var(--teal);
+  opacity: 0.55;
+}
+
+.link-card.done .link-step {
+  background: var(--teal);
 }
 
 .link-card.done .link-cta {
   background: var(--teal);
   border-color: var(--teal);
   color: var(--bg);
+}
+
+/* 지금 눌러야 할 "다음" 계정 — 강조 + 펄스 링 */
+.link-card.next {
+  border-color: var(--teal);
+}
+
+.link-card.next .link-step {
+  background: var(--teal);
+}
+
+.link-card.next .link-cta {
+  background: var(--teal);
+  border-color: var(--teal);
+  color: var(--bg);
+}
+
+.link-card.next::after {
+  content: "";
+  position: absolute;
+  inset: -3px;
+  border-radius: calc(var(--radius) + 3px);
+  border: 2px solid var(--teal);
+  pointer-events: none;
+  animation: pulseRing 1.7s ease-in-out infinite;
+}
+
+@keyframes pulseRing {
+  0%,
+  100% {
+    opacity: 0.22;
+  }
+  50% {
+    opacity: 0.85;
+  }
 }
 
 /* ---------- 푸터 ---------- */
