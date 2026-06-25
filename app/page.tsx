@@ -1,6 +1,7 @@
 import { site } from "@/lib/config";
 import InstagramLinks from "@/components/InstagramLinks";
 import LuckyDraw from "@/components/LuckyDraw";
+import { FollowGateProvider } from "@/components/FollowGate";
 
 export default function Home() {
   return (
@@ -32,9 +33,11 @@ export default function Home() {
           </p>
         </header>
 
-        <InstagramLinks />
+        <FollowGateProvider>
+          <InstagramLinks />
 
-        <LuckyDraw />
+          <LuckyDraw />
+        </FollowGateProvider>
 
         <footer className="footer">
           © {new Date().getFullYear()} {site.brandNameEn} · all rights reserved

@@ -4,6 +4,7 @@ import { useCallback, useEffect, useState, type FormEvent } from "react";
 import { site } from "@/lib/config";
 import SlotMachine from "./SlotMachine";
 import Confetti from "./Confetti";
+import { useFollowGate } from "./FollowGate";
 
 type Step = "form" | "spinning" | "result" | "already";
 type Outcome = "win" | "lose";
@@ -17,10 +18,10 @@ const HANDLE_RE = /^[a-z0-9._]{2,30}$/;
 const STORAGE_KEY = "ullim:draw:entry";
 
 export default function LuckyDraw() {
+  const { count, total, allClicked } = useFollowGate();
   const [open, setOpen] = useState(false);
   const [step, setStep] = useState<Step>("form");
   const [handle, setHandle] = useState("");
-  const [followed, setFollowed] = useState(false);
   const [submitting, setSubmitting] = useState(false);
   const [outcome, setOutcome] = useState<Outcome | null>(null);
   const [error, setError] = useState<string | null>(null);
@@ -87,10 +88,6 @@ export default function LuckyDraw() {
       setError("올바른 인스타그램 아이디를 입력해 주세요. (영문/숫자/마침표/밑줄)");
       return;
     }
-    if (!followed) {
-      setError("3개 계정을 모두 팔로우한 뒤 체크해 주세요.");
-      return;
-    }
 
     setSubmitting(true);
     try {
@@ -150,9 +147,26 @@ export default function LuckyDraw() {
                 팔로우 후 응모하면 즉석 추첨!
                 <br />당첨 <strong>3분</strong> {site.prize} · 그 외 <strong>{site.consolationPrize}</strong> 증정
               </p>
-              <button type="button" className="draw-open" onClick={openDraw}>
-                럭키드로우 응모하기
-              </button>
+              {allClicked ? (
+                <button type="button" className="draw-open" onClick={openDraw}>
+                  럭키드로우 응모하기
+                </button>
+              ) : (
+                <>
+                  <div className="follow-progress" aria-hidden>
+                    {Array.from({ length: total }).map((_, i) => (
+                      <span key={i} className={i < count ? "on" : ""} />
+                    ))}
+                  </div>
+                  <button type="button" className="draw-open locked" disabled>
+                    🔒 응모하기
+                  </button>
+                  <p className="draw-lock-hint">
+                    {count}/{total} 팔로우 완료 · {total}개 계정을 모두
+                    팔로우하면 열려요
+                  </p>
+                </>
+              )}
             </>
           )}
         </div>
@@ -202,15 +216,6 @@ export default function LuckyDraw() {
                       maxLength={31}
                     />
                   </span>
-                </label>
-
-                <label className="check-row">
-                  <input
-                    type="checkbox"
-                    checked={followed}
-                    onChange={(e) => setFollowed(e.target.checked)}
-                  />
-                  <span>팔로우 완료했어요</span>
                 </label>
 
                 {error && <p className="form-error">{error}</p>}
