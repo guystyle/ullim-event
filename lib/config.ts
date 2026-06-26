@@ -21,10 +21,11 @@ export const site = {
   ],
 } as const;
 
-/** 럭키드로우 설정 (서버 전용) */
+/** 럭키드로우 설정 (서버 전용) — 값은 이 코드에서 직접 관리합니다.
+ *  (Vercel 환경변수는 사용하지 않음. 테스트하려면 아래 숫자를 바꿔 커밋·푸시하세요.) */
 export const drawConfig = {
-  /** 전체 당첨 상한 — 기본 3명 */
-  maxWinners: parseInt(process.env.MAX_WINNERS ?? "3", 10),
-  /** 1회 응모당 당첨 확률 (0~1) — 기본 5% */
-  winProbability: parseFloat(process.env.WIN_PROBABILITY ?? "0.05"),
+  /** 전체 당첨 상한 */
+  maxWinners: 3,
+  /** 1회 응모당 당첨 확률 (0~1) — 현재 5% */
+  winProbability: 0.05,
 };
